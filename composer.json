@@ -1,5 +1,5 @@
 {
-  "name": "optimistdigital/nova-menu-builder",
+  "name": "kraenkvisuell/nova-menu-builder",
   "description": "This Laravel Nova package allows you to create and manage menus and menu items.",
   "keywords": [
     "laravel",
@@ -29,7 +29,7 @@
   ],
   "require": {
     "php": ">=7.2.0",
-    "laravel/framework": "^7.0 || ^8.0",
+    "laravel/framework": "^8.0 || ^9.0",
     "doctrine/dbal": ">=2.0.0",
     "laravel/nova": "^3.0",
     "optimistdigital/nova-translations-loader": "^3.0",
