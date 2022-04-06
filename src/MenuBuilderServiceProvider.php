@@ -16,9 +16,6 @@ class MenuBuilderServiceProvider extends ServiceProvider
         // Load views
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'nova-menu');
 
-        // Load translations
-        $this->loadTranslations(__DIR__.'/../resources/lang', 'nova-menu-builder', true);
-
         // Load migrations
         if (config('nova-menu.auto_load_migrations', true)) {
             $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
