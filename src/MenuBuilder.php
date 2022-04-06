@@ -2,6 +2,7 @@
 
 namespace KraenkVisuell\MenuBuilder;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Laravel\Nova\Nova;
@@ -154,5 +155,10 @@ class MenuBuilder extends Tool
     public static function getMenuConfig($slug)
     {
         return config("nova-menu.menus.{$slug}", []);
+    }
+
+    public function menu(Request $request)
+    {
+        //
     }
 }
