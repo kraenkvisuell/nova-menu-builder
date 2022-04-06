@@ -77,8 +77,8 @@ The config would look like this:
 
 ```php
 'menu_item_types' => [
-  \OptimistDigital\MenuBuilder\MenuItemTypes\MenuItemTextType::class,
-  \OptimistDigital\MenuBuilder\MenuItemTypes\MenuItemStaticURLType::class,
+  \KraenkVisuell\MenuBuilder\MenuItemTypes\MenuItemTextType::class,
+  \KraenkVisuell\MenuBuilder\MenuItemTypes\MenuItemStaticURLType::class,
   // ...
 ],
 ```

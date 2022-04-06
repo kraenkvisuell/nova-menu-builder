@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\MenuItemTypes;
+namespace KraenkVisuell\MenuBuilder\MenuItemTypes;
 
 abstract class BaseMenuItemType
 {
@@ -83,7 +83,6 @@ abstract class BaseMenuItemType
      *
      * @return array A key-value map of attributes and rules.
      */
-
     public static function getRules(): array
     {
         return [];

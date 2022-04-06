@@ -1,9 +1,9 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Models;
+namespace KraenkVisuell\MenuBuilder\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use OptimistDigital\MenuBuilder\MenuBuilder;
+use KraenkVisuell\MenuBuilder\MenuBuilder;
 
 class MenuItem extends Model
 {
@@ -13,7 +13,7 @@ class MenuItem extends Model
 
     protected $casts = [
         'enabled' => 'boolean',
-        'data' => 'array'
+        'data' => 'array',
     ];
 
     protected $appends = ['enabledClass', 'displayValue', 'fields'];
@@ -59,6 +59,7 @@ class MenuItem extends Model
         if (class_exists($this->class)) {
             return $this->class::getDisplayValue($this->value, $this->data, $this->locale);
         }
+
         return $this->value;
     }
 
@@ -67,7 +68,7 @@ class MenuItem extends Model
         if (class_exists($this->class)) {
             return $this->class::getIdentifier($this->value);
         }
-        return null;
+
     }
 
     public function getCustomValueAttribute()
@@ -75,6 +76,7 @@ class MenuItem extends Model
         if (class_exists($this->class)) {
             return $this->class::getValue($this->value, $this->data, $this->locale);
         }
+
         return $this->value;
     }
 
@@ -83,6 +85,7 @@ class MenuItem extends Model
         if (class_exists($this->class)) {
             return $this->class::getData($this->data);
         }
+
         return $this->data;
     }
 
@@ -92,6 +95,7 @@ class MenuItem extends Model
         foreach ($fields as $field) {
             $field->resolve($this);
         }
+
         return $fields;
     }
 }

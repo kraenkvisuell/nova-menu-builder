@@ -1,15 +1,14 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder;
+namespace KraenkVisuell\MenuBuilder;
 
+use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Laravel\Nova\Nova;
 use Laravel\Nova\Tool;
-use Illuminate\Support\Str;
-use Illuminate\Support\Arr;
 
 class MenuBuilder extends Tool
 {
-
     /**
      * Perform any tasks that need to happen when the tool is booted.
      *
@@ -17,8 +16,8 @@ class MenuBuilder extends Tool
      */
     public function boot()
     {
-        Nova::script('nova-menu', __DIR__ . '/../dist/js/menu-builder.js');
-        Nova::style('nova-menu', __DIR__ . '/../dist/css/menu-builder.css');
+        Nova::script('nova-menu', __DIR__.'/../dist/js/menu-builder.js');
+        Nova::style('nova-menu', __DIR__.'/../dist/css/menu-builder.css');
 
         $menuBuilderUriKey = static::getMenuResource()::uriKey();
         Nova::provideToScript([
@@ -47,6 +46,7 @@ class MenuBuilder extends Tool
             return $localesConfig;
         } elseif (Str::contains($localesConfig, '@')) {
             [$class, $method] = Str::parseCallback($localesConfig);
+
             return app()->make($class)->{$method}();
         }
 
@@ -58,12 +58,12 @@ class MenuBuilder extends Tool
         $templateFields = [];
 
         $handleField = function (&$field) {
-            if (!empty($field->attribute) && ($field->attribute !== 'ComputedField')) {
+            if (! empty($field->attribute) && ($field->attribute !== 'ComputedField')) {
                 if (empty($field->panel)) {
-                    $field->attribute = 'data->' . $field->attribute;
+                    $field->attribute = 'data->'.$field->attribute;
                 } else {
                     $sanitizedPanel = nova_menu_builder_sanitize_panel_name($field->panel);
-                    $field->attribute = 'data->' . $sanitizedPanel . '->' . $field->attribute;
+                    $field->attribute = 'data->'.$sanitizedPanel.'->'.$field->attribute;
                 }
             }
 
@@ -94,12 +94,14 @@ class MenuBuilder extends Tool
 
     public static function getRulesFromMenuLinkable(?string $menuLinkableClass)
     {
-        $menusTableName = MenuBuilder::getMenusTableName();
+        $menusTableName = self::getMenusTableName();
 
         $menuItemRules = $menuLinkableClass ? $menuLinkableClass::getRules() : [];
         $dataRules = [];
         foreach ($menuItemRules as $key => $rule) {
-            if ($key !== 'value' && !Str::startsWith($key, 'data->')) $key = "data->{$key}";
+            if ($key !== 'value' && ! Str::startsWith($key, 'data->')) {
+                $key = "data->{$key}";
+            }
             $dataRules[$key] = $rule;
         }
 
@@ -109,16 +111,14 @@ class MenuBuilder extends Tool
             'locale' => 'required',
             'value' => 'present',
             'class' => 'required',
-            'target' => 'required|in:_self,_blank'
+            'target' => 'required|in:_self,_blank',
         ], $dataRules);
     }
-
-
 
     // In-package helpers
     public static function getMenuResource()
     {
-        return config('nova-menu.resource', \OptimistDigital\MenuBuilder\Nova\Resources\MenuResource::class);
+        return config('nova-menu.resource', \KraenkVisuell\MenuBuilder\Nova\Resources\MenuResource::class);
     }
 
     public static function getMenusTableName()
@@ -133,12 +133,12 @@ class MenuBuilder extends Tool
 
     public static function getMenuClass()
     {
-        return config('nova-menu.menu_model', \OptimistDigital\MenuBuilder\Models\Menu::class);
+        return config('nova-menu.menu_model', \KraenkVisuell\MenuBuilder\Models\Menu::class);
     }
 
     public static function getMenuItemClass()
     {
-        return config('nova-menu.menu_item_model', \OptimistDigital\MenuBuilder\Models\MenuItem::class);
+        return config('nova-menu.menu_item_model', \KraenkVisuell\MenuBuilder\Models\MenuItem::class);
     }
 
     public static function getMenuItemTypes()

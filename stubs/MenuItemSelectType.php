@@ -2,7 +2,7 @@
 
 namespace App\Nova\MenuBuilderTypes;
 
-use OptimistDigital\MenuBuilder\MenuItemTypes\MenuItemSelectType;
+use KraenkVisuell\MenuBuilder\MenuItemTypes\MenuItemSelectType;
 
 class :className extends MenuItemSelectType
 {

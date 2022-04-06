@@ -7,7 +7,6 @@ return [
     |------------------|
     */
 
-
     /*
     |--------------------------------------------------------------------------
     | Table names
@@ -16,7 +15,6 @@ return [
 
     'menus_table_name' => 'nova_menu_menus',
     'menu_items_table_name' => 'nova_menu_menu_items',
-
 
     /*
     |--------------------------------------------------------------------------
@@ -29,7 +27,6 @@ return [
     */
 
     'locales' => ['en_US' => 'English'],
-
 
     /*
     |--------------------------------------------------------------------------
@@ -63,8 +60,8 @@ return [
     */
 
     'menu_item_types' => [
-        \OptimistDigital\MenuBuilder\MenuItemTypes\MenuItemTextType::class,
-        \OptimistDigital\MenuBuilder\MenuItemTypes\MenuItemStaticURLType::class,
+        \KraenkVisuell\MenuBuilder\MenuItemTypes\MenuItemTextType::class,
+        \KraenkVisuell\MenuBuilder\MenuItemTypes\MenuItemStaticURLType::class,
     ],
 
     /*
@@ -72,7 +69,6 @@ return [
     | Optional configuration options |
     |--------------------------------|
     */
-
 
     /*
     |--------------------------------------------------------------------------
@@ -83,8 +79,7 @@ return [
     |
     */
 
-    'resource' => OptimistDigital\MenuBuilder\Nova\Resources\MenuResource::class,
-
+    'resource' => KraenkVisuell\MenuBuilder\Nova\Resources\MenuResource::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -95,8 +90,7 @@ return [
     |
     */
 
-    'menu_model' => OptimistDigital\MenuBuilder\Models\Menu::class,
-
+    'menu_model' => KraenkVisuell\MenuBuilder\Models\Menu::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -107,8 +101,7 @@ return [
     |
     */
 
-    'menu_item_model' => OptimistDigital\MenuBuilder\Models\MenuItem::class,
-
+    'menu_item_model' => KraenkVisuell\MenuBuilder\Models\MenuItem::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -120,6 +113,5 @@ return [
     */
 
     'auto_load_migrations' => true,
-
 
 ];

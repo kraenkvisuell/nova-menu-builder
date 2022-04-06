@@ -51,7 +51,7 @@ public function tools()
 {
     return [
         // ...
-        new \OptimistDigital\MenuBuilder\MenuBuilder,
+        new \KraenkVisuell\MenuBuilder\MenuBuilder,
     ];
 }
 ```
@@ -138,7 +138,7 @@ return [
 
 Menu builder allows you create custom menu item types with custom fields.
 
-Create a class that extends the `OptimistDigital\MenuBuilder\MenuItemTypes\BaseMenuItemType` class and register it in the config file.
+Create a class that extends the `KraenkVisuell\MenuBuilder\MenuItemTypes\BaseMenuItemType` class and register it in the config file.
 
 ```php
 // in config/nova-menu.php

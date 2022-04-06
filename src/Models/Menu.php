@@ -1,9 +1,9 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Models;
+namespace KraenkVisuell\MenuBuilder\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use OptimistDigital\MenuBuilder\MenuBuilder;
+use KraenkVisuell\MenuBuilder\MenuBuilder;
 
 class Menu extends Model
 {
@@ -37,7 +37,7 @@ class Menu extends Model
                 ->get()
                 ->map(function ($menuItem) {
                     return $this->formatMenuItem($menuItem);
-                })
+                }),
         ];
     }
 
@@ -53,7 +53,7 @@ class Menu extends Model
             'data' => $menuItem->customData,
             'children' => empty($menuItem->children) ? [] : $menuItem->children->map(function ($item) {
                 return $this->formatMenuItem($item);
-            })
+            }),
         ];
     }
 }

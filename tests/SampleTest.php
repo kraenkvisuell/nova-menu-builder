@@ -1,7 +1,6 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Tests;
-
+namespace KraenkVisuell\MenuBuilder\Tests;
 
 class SampleTest extends TestCase
 {

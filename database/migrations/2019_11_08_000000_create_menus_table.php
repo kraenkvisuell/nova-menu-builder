@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
-use OptimistDigital\MenuBuilder\MenuBuilder;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+use KraenkVisuell\MenuBuilder\MenuBuilder;
 
 class CreateMenusTable extends Migration
 {

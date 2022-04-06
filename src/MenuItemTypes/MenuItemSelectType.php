@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\MenuItemTypes;
+namespace KraenkVisuell\MenuBuilder\MenuItemTypes;
 
 abstract class MenuItemSelectType extends BaseMenuItemType
 {
@@ -27,7 +27,6 @@ abstract class MenuItemSelectType extends BaseMenuItemType
      *
      * @return array A key-value map of attributes and rules.
      */
-
     public static function getRules(): array
     {
         return [

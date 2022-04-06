@@ -1,10 +1,10 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Http\Requests;
+namespace KraenkVisuell\MenuBuilder\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Str;
-use OptimistDigital\MenuBuilder\MenuBuilder;
+use KraenkVisuell\MenuBuilder\MenuBuilder;
 
 class MenuItemFormRequest extends FormRequest
 {
@@ -32,8 +32,11 @@ class MenuItemFormRequest extends FormRequest
     {
         $keys = ['name', 'enabled', 'target', 'class', 'value', 'menu_id', 'locale'];
         foreach ($this->all() as $key => $value) {
-            if (Str::startsWith($key, 'data->')) $keys[] = $key;
+            if (Str::startsWith($key, 'data->')) {
+                $keys[] = $key;
+            }
         }
+
         return $this->only($keys);
     }
 }

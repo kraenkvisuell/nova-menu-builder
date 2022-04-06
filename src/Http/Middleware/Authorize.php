@@ -1,8 +1,8 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Http\Middleware;
+namespace KraenkVisuell\MenuBuilder\Http\Middleware;
 
-use OptimistDigital\MenuBuilder\MenuBuilder;
+use KraenkVisuell\MenuBuilder\MenuBuilder;
 
 class Authorize
 {

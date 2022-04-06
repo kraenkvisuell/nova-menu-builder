@@ -1,6 +1,6 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\MenuItemTypes;
+namespace KraenkVisuell\MenuBuilder\MenuItemTypes;
 
 class MenuItemTextType extends BaseMenuItemType
 {

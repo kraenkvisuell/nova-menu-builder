@@ -1,18 +1,18 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Nova\Resources;
+namespace KraenkVisuell\MenuBuilder\Nova\Resources;
 
+use Illuminate\Http\Request;
+use KraenkVisuell\MenuBuilder\MenuBuilder;
+use KraenkVisuell\MenuBuilder\Nova\Fields\MenuBuilderField;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Panel;
 use Laravel\Nova\Resource;
-use Illuminate\Http\Request;
-use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use OptimistDigital\MenuBuilder\MenuBuilder;
-use OptimistDigital\MenuBuilder\Nova\Fields\MenuBuilderField;
 
 class MenuResource extends Resource
 {
-    public static $model = \OptimistDigital\MenuBuilder\Models\Menu::class;
+    public static $model = \KraenkVisuell\MenuBuilder\Models\Menu::class;
     public static $search = ['name', 'slug'];
     public static $displayInNavigation = false;
 
@@ -39,7 +39,7 @@ class MenuResource extends Resource
 
     public function title()
     {
-        return $this->name . ' (' . $this->slug . ')';
+        return $this->name.' ('.$this->slug.')';
     }
 
     public function fields(Request $request)
@@ -52,7 +52,9 @@ class MenuResource extends Resource
             ->toArray();
 
         $maxDepth = 10;
-        if ($this->slug) $maxDepth = MenuBuilder::getMenuConfig($this->slug)['max_depth'] ?? 10;
+        if ($this->slug) {
+            $maxDepth = MenuBuilder::getMenuConfig($this->slug)['max_depth'] ?? 10;
+        }
 
         return [
             Text::make(__('novaMenuBuilder.nameFieldName'), 'name')
@@ -67,7 +69,10 @@ class MenuResource extends Resource
 
             Text::make(__('novaMenuBuilder.menuResourceSingularLabel'), 'slug', function ($key) {
                 $menu = MenuBuilder::getMenus()[$key] ?? null;
-                if (!$menu) return "<s>{$key}</s>";
+                if (! $menu) {
+                    return "<s>{$key}</s>";
+                }
+
                 return "<span class='whitespace-no-wrap'><b>{$menu['name']}</b> <i>({$key})</i></span>";
             })
                 ->hideWhenCreating()
@@ -79,7 +84,7 @@ class MenuResource extends Resource
                     ->hideWhenCreating()
                     ->maxDepth($maxDepth)
                     ->readonly(),
-            ])
+            ]),
         ];
     }
 }

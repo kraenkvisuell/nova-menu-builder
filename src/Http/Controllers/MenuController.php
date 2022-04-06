@@ -1,12 +1,12 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Http\Controllers;
+namespace KraenkVisuell\MenuBuilder\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use OptimistDigital\MenuBuilder\MenuBuilder;
-use OptimistDigital\MenuBuilder\Models\Menu;
-use OptimistDigital\MenuBuilder\Http\Requests\MenuItemFormRequest;
+use KraenkVisuell\MenuBuilder\Http\Requests\MenuItemFormRequest;
+use KraenkVisuell\MenuBuilder\MenuBuilder;
+use KraenkVisuell\MenuBuilder\Models\Menu;
 
 class MenuController extends Controller
 {
@@ -39,7 +39,9 @@ class MenuController extends Controller
         $fromMenu = Menu::find($fromMenuId);
         $toMenu = Menu::find($toMenuId);
 
-        if (!$fromMenu || !$toMenu) return response()->json(['error' => 'menu_not_found'], 404);
+        if (! $fromMenu || ! $toMenu) {
+            return response()->json(['error' => 'menu_not_found'], 404);
+        }
 
         $maxOrder = $fromMenu->rootMenuItems()->max('order');
         $i = 1;
@@ -77,8 +79,12 @@ class MenuController extends Controller
     {
         $locale = $request->get('locale');
         $menu = MenuBuilder::getMenuClass()::find($menuId);
-        if (empty($menu)) return response()->json(['menu' => 'menu_not_found'], 400);
-        if (empty($locale)) return response()->json(['menu' => 'locale_required_but_missing'], 400);
+        if (empty($menu)) {
+            return response()->json(['menu' => 'menu_not_found'], 400);
+        }
+        if (empty($locale)) {
+            return response()->json(['menu' => 'locale_required_but_missing'], 400);
+        }
 
         $menuItems = $menu
             ->rootMenuItems()
@@ -114,7 +120,7 @@ class MenuController extends Controller
     /**
      * Creates new MenuItem.
      *
-     * @param OptimistDigital\MenuBuilder\Http\Requests\MenuItemFormRequest $request
+     * @param KraenkVisuell\MenuBuilder\Http\Requests\MenuItemFormRequest $request
      * @return Illuminate\Http\Response
      **/
     public function createMenuItem(MenuItemFormRequest $request)
@@ -151,7 +157,7 @@ class MenuController extends Controller
     /**
      * Updates a MenuItem.
      *
-     * @param OptimistDigital\MenuBuilder\Http\Requests\MenuItemFormRequest $request
+     * @param KraenkVisuell\MenuBuilder\Http\Requests\MenuItemFormRequest $request
      * @param $menuItem
      * @return Illuminate\Http\Response
      **/
@@ -159,7 +165,9 @@ class MenuController extends Controller
     {
         $menuItem = MenuBuilder::getMenuItemClass()::find($menuItemId);
 
-        if (!isset($menuItem)) return response()->json(['error' => 'menu_item_not_found'], 400);
+        if (! isset($menuItem)) {
+            return response()->json(['error' => 'menu_item_not_found'], 400);
+        }
         $data = $request->getValues();
 
         $menuItem->data = [];
@@ -168,6 +176,7 @@ class MenuController extends Controller
         }
 
         $menuItem->save();
+
         return response()->json(['success' => true], 200);
     }
 
@@ -182,6 +191,7 @@ class MenuController extends Controller
         $menuItem = MenuBuilder::getMenuItemClass()::findOrFail($menuItemId);
         $menuItem->children()->delete();
         $menuItem->delete();
+
         return response()->json(['success' => true], 200);
     }
 
@@ -194,21 +204,27 @@ class MenuController extends Controller
     public function getMenuItemTypes(Request $request, $menuId)
     {
         $menu = MenuBuilder::getMenuClass()::find($menuId);
-        if ($menu === null) return response()->json(['error' => 'menu_not_found'], 404);
+        if ($menu === null) {
+            return response()->json(['error' => 'menu_not_found'], 404);
+        }
         $locale = $request->get('locale');
-        if ($locale === null) return response()->json(['error' => 'locale_required'], 400);
+        if ($locale === null) {
+            return response()->json(['error' => 'locale_required'], 400);
+        }
 
         $menuItemTypes = [];
         $menuItemTypesRaw = MenuBuilder::getMenuItemTypes();
 
         $formatAndAppendMenuItemType = function ($typeClass) use (&$menuItemTypes, $locale) {
-            if (!class_exists($typeClass)) return;
+            if (! class_exists($typeClass)) {
+                return;
+            }
 
             $data = [
                 'name' => $typeClass::getName(),
                 'type' => $typeClass::getType(),
                 'fields' => MenuBuilder::getFieldsFromMenuItemTypeClass($typeClass) ?? [],
-                'class' => $typeClass
+                'class' => $typeClass,
             ];
 
             if (method_exists($typeClass, 'getOptions')) {
@@ -246,7 +262,9 @@ class MenuController extends Controller
     {
         $menuItem = MenuBuilder::getMenuItemClass()::find($menuItemId);
 
-        if (empty($menuItem)) return response()->json(['error' => 'menu_item_not_found'], 400);
+        if (empty($menuItem)) {
+            return response()->json(['error' => 'menu_item_not_found'], 400);
+        }
 
         $this->shiftMenuItemsWithHigherOrder($menuItem);
         $this->recursivelyDuplicate($menuItem, $menuItem->parent_id, $menuItem->order + 1);
@@ -254,13 +272,12 @@ class MenuController extends Controller
         return response()->json(['success' => true], 200);
     }
 
-
     // ------------------------------
     // Helpers
     // ------------------------------
 
     /**
-     * Increase order number of every menu item that has higher order number than ours by one
+     * Increase order number of every menu item that has higher order number than ours by one.
      *
      * @param $menuItem
      */
@@ -301,8 +318,12 @@ class MenuController extends Controller
     {
         $data = $menuItem->toArray();
         unset($data['id']);
-        if ($parentId !== null) $data['parent_id'] = $parentId;
-        if ($order !== null) $data['order'] = $order;
+        if ($parentId !== null) {
+            $data['parent_id'] = $parentId;
+        }
+        if ($order !== null) {
+            $data['order'] = $order;
+        }
         $data['locale'] = $menuItem->locale;
 
         // Save the long way instead of ::create() to trigger observer(s)
@@ -312,6 +333,8 @@ class MenuController extends Controller
         $newMenuItem->save();
 
         $children = $menuItem->children;
-        foreach ($children as $child) $this->recursivelyDuplicate($child, $newMenuItem->id);
+        foreach ($children as $child) {
+            $this->recursivelyDuplicate($child, $newMenuItem->id);
+        }
     }
 }

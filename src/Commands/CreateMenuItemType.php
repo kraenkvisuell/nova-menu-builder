@@ -1,10 +1,10 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Commands;
+namespace KraenkVisuell\MenuBuilder\Commands;
 
-use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class CreateMenuItemType extends Command
 {
@@ -34,7 +34,7 @@ class CreateMenuItemType extends Command
         $this->name = $this->getNameArgument();
         $path = $this->getPath();
         $this->files->put($path, $this->buildClass());
-        $this->info('Successfully created MenuItemType at ' . $path);
+        $this->info('Successfully created MenuItemType at '.$path);
     }
 
     /**
@@ -44,9 +44,10 @@ class CreateMenuItemType extends Command
      **/
     public function getClassNameArgument()
     {
-        if (!$this->argument('className')) {
+        if (! $this->argument('className')) {
             return $this->ask('Please enter a name for the MenuItemType class');
         }
+
         return $this->argument('className');
     }
 
@@ -78,7 +79,7 @@ class CreateMenuItemType extends Command
     protected function getPath()
     {
         return $this->makeDirectory(
-            app_path('Nova/MenuBuilderTypes/' . $this->className . '.php')
+            app_path('Nova/MenuBuilderTypes/'.$this->className.'.php')
         );
     }
 
@@ -91,9 +92,10 @@ class CreateMenuItemType extends Command
     protected function makeDirectory($path)
     {
         $directory = dirname($path);
-        if (!$this->files->isDirectory($directory)) {
+        if (! $this->files->isDirectory($directory)) {
             $this->files->makeDirectory($directory, 0755, true, true);
         }
+
         return $path;
     }
 
@@ -111,8 +113,8 @@ class CreateMenuItemType extends Command
         ];
 
         $templateFilePath = ($this->type === 'select')
-            ? __DIR__ . '/../../stubs/MenuItemSelectType.php'
-            : __DIR__ . '/../../stubs/MenuItemCustomType.php';
+            ? __DIR__.'/../../stubs/MenuItemSelectType.php'
+            : __DIR__.'/../../stubs/MenuItemCustomType.php';
 
         $template = $this->files->get($templateFilePath);
 

@@ -1,10 +1,10 @@
 <?php
 
-namespace OptimistDigital\MenuBuilder\Nova\Fields;
+namespace KraenkVisuell\MenuBuilder\Nova\Fields;
 
+use KraenkVisuell\MenuBuilder\MenuBuilder;
+use KraenkVisuell\MenuBuilder\Models\Menu;
 use Laravel\Nova\Fields\Field;
-use OptimistDigital\MenuBuilder\MenuBuilder;
-use OptimistDigital\MenuBuilder\Models\Menu;
 
 class MenuBuilderField extends Field
 {
